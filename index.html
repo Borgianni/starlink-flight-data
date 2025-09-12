@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open Starlink Flight Data</title>
+</head>
+<body>
+  <h1>🌍 Open Starlink Flight Data</h1>
+  <p>This page lists contributed datasets:</p>
+  <ul id="file-list"></ul>
+
+  <script>
+    async function loadFiles() {
+      const repo = "USERNAME/open-starlink-flight-data"; // <-- cambia USERNAME con il tuo
+      const url = `https://api.github.com/repos/${repo}/contents/datasets`;
+      const res = await fetch(url);
+      const files = await res.json();
+
+      const list = document.getElementById("file-list");
+      files.forEach(f => {
+        if (f.type === "dir") {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="${f.html_url}">${f.name}</a>`;
+          list.appendChild(li);
+        }
+      });
+    }
+    loadFiles();
+  </script>
+</body>
+</html>
