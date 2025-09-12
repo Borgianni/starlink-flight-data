@@ -20,21 +20,10 @@ All contributed datasets are stored in the `/datasets` folder.
 Each dataset must be inside its **own subfolder** with a clear and consistent naming convention:
 
 datasets/
-└── Flight-<AirlineCode><FlightNumber>-<YYYY-MM-DD>/
-├── metadata.json
-└── data.csv
+/Flight-<AirlineCode><FlightNumber>-<YYYY-MM-DD>
+/metadata.json
+/data.csv
 
-shell
-Copia codice
-
-### Example:
-datasets/
-└── Flight-LH1234-2025-09-12/
-├── metadata.json
-└── data.csv
-
-pgsql
-Copia codice
 
 ---
 
@@ -42,6 +31,7 @@ Copia codice
 
 ### 1. `metadata.json`
 This file describes the flight and context of your data collection.
+
 
 **Template:**
 ```json
@@ -54,116 +44,200 @@ This file describes the flight and context of your data collection.
   "weather": "Clear skies, light turbulence",
   "notes": "Stable connection during most of the flight. Minor dropouts over Greenland."
 }
-Fields explanation:
-
-flight → Flight number (airline code + digits, e.g. LH1234).
-
-date → Date of the flight in YYYY-MM-DD format.
-
-departure → Departure airport IATA code (e.g. FRA).
-
-arrival → Arrival airport IATA code (e.g. SFO).
-
-airline → Name of the airline.
-
-weather → Short description of weather conditions.
-
-notes → Free text, any observation about the connection or context.
-
-2. data.csv
+```
+### 2. data.csv
 This file contains the actual measurements you collected.
 Preferably use CSV (comma-separated values) with clear headers.
 
-Example format:
+---
+## 🔀 How to contribute (step by step)
+- Fork this repository
+- Click the “Fork” button on the top-right of this repo.
+- This creates a personal copy under your GitHub account.
+- Clone your fork (optional)
+- 
+# Contributing Guidelines ✈️📡
 
-csv
-Copia codice
-timestamp,lat,lon,ping_ms,download_mbps,upload_mbps
-2025-09-12T10:00:00Z,50.1109,8.6821,45,55.2,10.1
-2025-09-12T10:05:00Z,51.1657,10.4515,47,52.8,9.7
-2025-09-12T10:10:00Z,52.5200,13.4050,49,50.1,9.4
-timestamp → UTC ISO 8601 timestamp (YYYY-MM-DDTHH:MM:SSZ).
+Thank you for contributing to **Open Starlink Flight Data**!
 
-lat,lon → GPS coordinates if available (optional but useful).
+This repository collects **Starlink connectivity datasets gathered during flights** to help the scientific community analyze and understand how Starlink performs in aviation environments. Your contribution will advance research into satellite internet connectivity at altitude.
 
-ping_ms → Average latency in milliseconds.
+---
 
-download_mbps → Download speed.
+## 🛠️ Prerequisites
 
-upload_mbps → Upload speed.
+- A GitHub account (free to create)
+- Basic familiarity with file/folder organization
+- Optional: Knowledge of Git and GitHub Pull Requests (we provide step-by-step instructions)
 
-👉 If you don’t have all fields, include whatever data you have. Just keep headers clear.
+---
 
-🔀 How to contribute (step by step)
-Fork this repository
+## 📂 Repository Structure
 
-Click the “Fork” button on the top-right of this repo.
+All datasets are organized in the `/datasets` folder using a consistent naming convention:
 
-This creates a personal copy under your GitHub account.
+```
+datasets/
+└── Flight-<AirlineCode><FlightNumber>-<YYYY-MM-DD>/
+    ├── metadata.json
+    └── data.csv
+```
 
-Clone your fork (optional)
+**Example:**
+```
+datasets/
+└── Flight-LH1234-2025-09-12/
+    ├── metadata.json
+    └── data.csv
+```
+
+---
+
+## 📋 Required Files
+
+### 1. `metadata.json`
+
+This file describes your flight and data collection context.
+
+**Template:**
+```json
+{
+  "flight": "LH1234",
+  "date": "2025-09-12",
+  "departure": "FRA",
+  "arrival": "SFO",
+  "airline": "Lufthansa",
+  "aircraft_type": "A350-900",
+  "weather": "Clear skies, light turbulence over Atlantic",
+  "collection_method": "Manual speedtests every 5 minutes using Speedtest.net",
+  "notes": "Stable connection for most of flight. Brief dropouts over Greenland ice sheet."
+}
+```
+
+**Field Descriptions:**
+- `flight` → Flight number (airline code + digits)
+- `date` → Flight date in YYYY-MM-DD format
+- `departure` → Departure airport IATA code
+- `arrival` → Arrival airport IATA code  
+- `airline` → Airline name
+- `aircraft_type` → Aircraft model (if known)
+- `weather` → Weather conditions during flight
+- `collection_method` → How you gathered the data
+- `notes` → Any relevant observations about connectivity or context
+
+### 2. `data.csv`
+
+This file contains your actual connectivity measurements in CSV format with clear headers.
+
+**Recommended format:**
+```csv
+timestamp,lat,lon,altitude_ft,ping_ms,download_mbps,upload_mbps,status
+2025-09-12T10:00:00Z,50.1109,8.6821,35000,45,55.2,10.1,connected
+2025-09-12T10:05:00Z,51.1657,10.4515,36500,47,52.8,9.7,connected
+2025-09-12T10:10:00Z,52.5200,13.4050,37000,49,50.1,9.4,connected
+2025-09-12T10:15:00Z,53.2734,14.5289,37500,-1,0,0,disconnected
+```
+
+**Field Descriptions:**
+- `timestamp` → UTC time in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+- `lat,lon` → GPS coordinates (if available)
+- `altitude_ft` → Flight altitude in feet (if available)
+- `ping_ms` → Latency in milliseconds (-1 if no connection)
+- `download_mbps` → Download speed in Mbps
+- `upload_mbps` → Upload speed in Mbps  
+- `status` → Connection status (connected/disconnected/limited)
+
+> **Note:** Include whatever data you have available. Not all fields are required, but consistent headers help with analysis.
+
+---
+
+## 🔄 How to Contribute
+
+### Step 1: Fork the Repository
+1. Click the **"Fork"** button at the top-right of this repository
+2. This creates a personal copy under your GitHub account
+
+### Step 2: Clone Your Fork (Optional)
 If you know Git, clone your fork locally:
-
-bash
-Copia codice
+```bash
 git clone https://github.com/<your-username>/open-starlink-flight-data.git
 cd open-starlink-flight-data
-👉 If you don’t use Git, you can also upload files directly on GitHub’s web interface (see step 3).
+```
+👉 If you don't use Git, you can also upload files directly on GitHub's web interface (continue to step 3).
 
-Add your dataset
+### Step 3: Add Your Dataset
+1. Go to the `/datasets` folder
+2. Create a new subfolder following the naming convention:
+   ```
+   Flight-<AirlineCode><FlightNumber>-<YYYY-MM-DD>
+   ```
+3. Inside that folder, add:
+   - `metadata.json`
+   - `data.csv`
 
-Go to the /datasets folder.
+### Step 4: Commit Your Changes
+**If using the GitHub web UI:** click "Commit changes".
 
-Create a new subfolder following the naming convention:
-
-php-template
-Copia codice
-Flight-<AirlineCode><FlightNumber>-<YYYY-MM-DD>
-Inside that folder, add:
-
-metadata.json
-
-data.csv
-
-Commit your changes
-
-If using the GitHub web UI: click Commit changes.
-
-If using Git locally:
-
-bash
-Copia codice
+**If using Git locally:**
+```bash
 git add datasets/
 git commit -m "Add dataset for Flight LH1234 on 2025-09-12"
 git push origin main
-Open a Pull Request (PR)
+```
 
-Go to your fork on GitHub.
+### Step 5: Open a Pull Request (PR)
+1. Go to your fork on GitHub
+2. Click "Compare & pull request"
+3. Write a short description of your dataset
+4. Submit the PR
 
-Click Compare & pull request.
+### Step 6: Review & Merge
+- A maintainer will review your contribution
+- If everything looks good, your dataset will be merged into the main repo 🎉
 
-Write a short description of your dataset.
+---
 
-Submit the PR.
+## ✅ Best Practices
 
-Review & Merge
+### Data Quality
+- **Be consistent** with timestamps and units
+- **Document your methodology** in metadata.json
+- **Include context** about unusual readings or connection issues
 
-A maintainer will review your contribution.
+### File Organization  
+- Use the exact naming convention: `Flight-<Code><Number>-<YYYY-MM-DD>`
+- Keep one flight per folder
+- Use clear, descriptive commit messages
 
-If everything looks good, your dataset will be merged into the main repo. 🎉
+### Privacy & Safety
+- **Never include** personal information, payment details, or passwords
+- **Avoid** sharing sensitive flight information if requested by airline
+- **GPS coordinates** are helpful but optional if privacy is a concern
 
-✅ Best practices
-Use consistent naming (flight number + date).
+---
 
-Keep metadata.json human-readable.
+## 📊 Data Usage
 
-Keep data.csv clean and structured.
+Your contributed data may be used for:
+- Academic research on satellite internet performance
+- Aviation connectivity analysis
+- Starlink coverage mapping
+- Network performance optimization studies
 
-If you have multiple flights, create multiple folders.
+All data is shared under an open license for research purposes.
 
-💬 Need help?
-Open an Issue if you’re not sure how to contribute.
+---
 
-Or join the discussions tab to talk with other contributors.
+## 🆘 Need Help?
 
-Thanks again for helping the community! 🌍
+- **Have questions?** Open an [Issue](../../issues)
+- **Want to discuss?** Use the [Discussions](../../discussions) tab
+- **Found a bug?** Report it in [Issues](../../issues)
+
+---
+
+## 🙏 Thank You
+
+Your contribution helps advance our understanding of satellite internet in aviation. Every dataset makes the research community stronger!
+
+**Happy flying and measuring!** 🛫📊
