@@ -1,0 +1,11 @@
+{
+  "flight": "HA 449",
+  "date": "2025-05-17",
+  "departure": "HNL",
+  "arrival": "KIX",
+  "airline": "Hawaiian Airlines",
+  "aircraft_type": "Airbus A330-200",
+  "weather": "Clear skies, light turbulence over Pacific Ocean",
+  "collection_method": "Automatic ping every second towards Ground Station in Tokyo (100.64.0.1)",
+  "notes": "Stable connection for most of the flight. Ground station: Tokyo (Japan)"
+}
